@@ -1,52 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EatFeast Login</title>
 
     <style>
-        body {
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #fbc2a3, #f8b6c1);
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #fbc2a3, #f8b6c1);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            padding: 20px;
         }
 
         .login-box {
-            background: white;
-            width: 350px;
-            padding: 30px;
+            width: 100%;
+            max-width: 380px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px 25px;
             border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             text-align: center;
         }
 
         .login-box img {
-            width: 180px;
-            margin-bottom: 15px;
+            width: 140px;
+            margin-bottom: 10px;
         }
 
         .login-box h2 {
             margin-bottom: 20px;
-            color: #ff6b81;
+            color: #ff4f6d;
         }
 
-        .login-box input {
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
             width: 100%;
             padding: 12px;
-            margin: 10px 0;
             border-radius: 8px;
             border: 1px solid #ccc;
             font-size: 14px;
         }
 
-        .login-box button {
+        .input-group input:focus {
+            border-color: #ff6b81;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: #999;
+        }
+
+        .login-btn {
             width: 100%;
             padding: 12px;
-            margin-top: 10px;
-            background-color: #ff6b81;
+            background: #ff6b81;
             color: white;
             border: none;
             border-radius: 8px;
@@ -54,29 +79,73 @@
             cursor: pointer;
         }
 
-        .login-box button:hover {
-            background-color: #ff4f6d;
+        .login-btn:hover {
+            background: #ff4f6d;
         }
+
+        .extra-links {
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        .extra-links a {
+            color: #ff4f6d;
+            text-decoration: none;
+        }
+
+        .extra-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* 📱 Mobile */
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 25px 20px;
+            }
+
+            .login-box img {
+                width: 110px;
+            }
+
+            .login-box h2 {
+                font-size: 20px;
+            }
+        }
+
     </style>
 </head>
 
 <body>
 
+<div class="container">
     <div class="login-box">
 
-        <!-- Make sure this file name matches your uploaded image -->
         <img src="logo.jpg" alt="EatFeast Logo">
 
         <h2>Customer Login</h2>
 
-        <input type="text" placeholder="Username" required>
-        <input type="tel" placeholder="Phone Number" required>
+        <form action="category.html" method="GET">
 
-        <a href="category.html">
-            <button type="button">Login</button>
-        </a>
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+
+            <div class="input-group">
+                <input type="tel" name="phone" placeholder="Phone Number"
+                       pattern="[0-9]{10}" maxlength="10" required>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+
+        </form>
+
+        <div class="extra-links">
+            <p><a href="#">Forgot Password?</a></p>
+            <p>New user? <a href="#">Sign Up</a></p>
+        </div>
 
     </div>
+</div>
 
 </body>
 </html>
