@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,#a18cd1,#fbc2eb);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+/* Box */
+.box{
+  width:100%;
+  max-width:400px;
+  background:white;
+  padding:25px 20px;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  text-align:center;
+}
+
+/* Heading */
+h2{
+  color:#6a5acd;
+  margin-bottom:15px;
+}
+
+/* Payment icons */
+.icons{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin:15px 0;
+}
+
+.icons img{
+  width:70px;
+  height:70px;
+}
+
+/* UPI text */
+.upi{
+  margin:10px 0;
+  font-weight:bold;
+  color:#333;
+}
+
+/* Button */
+button{
+  width:100%;
+  background:#34a853;
+  color:white;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#2c8c47;
+}
+
+/* Success message */
+.success{
+  margin-top:20px;
+  color:#28a745;
+  font-weight:bold;
+}
+
+/* 📱 Mobile */
+@media(max-width:480px){
+  .icons img{
+    width:60px;
+    height:60px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>💳 Choose Payment</h2>
+
+<div class="icons">
+  <img src="https://img.icons8.com/color/96/google-pay.png" alt="GPay">
+  <img src="https://img.icons8.com/color/96/bhim.png" alt="UPI">
+</div>
+
+<p class="upi">UPI ID: eatfeast@upi</p>
+
+<button>Pay Now</button>
+
+<div class="success">
+  ✅ Order Placed Successfully!
+</div>
+
+</div>
+
+</body>
+</html>
