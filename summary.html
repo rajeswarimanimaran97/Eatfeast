@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Summary</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,#fbc2a3,#f8b6c1);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+/* Box */
+.box{
+  width:100%;
+  max-width:400px;
+  background:white;
+  padding:25px 20px;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Heading */
+h2{
+  text-align:center;
+  color:#ff4f6d;
+  margin-bottom:20px;
+}
+
+/* Items */
+.item{
+  display:flex;
+  justify-content:space-between;
+  margin:10px 0;
+  font-size:15px;
+}
+
+/* Divider */
+hr{
+  margin:15px 0;
+}
+
+/* Total */
+.total{
+  display:flex;
+  justify-content:space-between;
+  font-weight:bold;
+  font-size:16px;
+  margin-bottom:20px;
+}
+
+/* Button */
+button{
+  width:100%;
+  background:#ff6b81;
+  color:white;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:15px;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#ff4f6d;
+}
+
+/* Link reset */
+a{
+  text-decoration:none;
+}
+
+/* 📱 Mobile */
+@media(max-width:480px){
+  .box{
+    padding:20px 15px;
+  }
+
+  .item{
+    font-size:14px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>🧾 Order Summary</h2>
+
+<div class="item">
+  <span>Burger</span>
+  <span>₹120</span>
+</div>
+
+<div class="item">
+  <span>Pizza</span>
+  <span>₹250</span>
+</div>
+
+<hr>
+
+<div class="total">
+  <span>Total</span>
+  <span>₹370</span>
+</div>
+
+<a href="payment.html">
+  <button>Buy Now</button>
+</a>
+
+</div>
+
+</body>
+</html>
