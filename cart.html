@@ -3,19 +3,23 @@
 <head>
 <title>Cart</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body{
   font-family:Arial;
   background:linear-gradient(to right,#fbc2a3,#f8b6c1);
   text-align:center;
-  padding:40px;
+  padding:20px;
+  margin:0;
 }
 
 .box{
   background:white;
-  width:350px;
+  width:90%;          /* mobile ku fit */
+  max-width:350px;    /* laptop la limit */
   margin:auto;
-  padding:30px;
+  padding:25px;
   border-radius:15px;
   box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
@@ -35,10 +39,19 @@ button{
   border:none;
   border-radius:8px;
   cursor:pointer;
+  font-size:16px;
 }
 
 button:hover{
   background:#ff4f6d;
+}
+
+/* Laptop view improve */
+@media (min-width:768px){
+  .box{
+    max-width:400px;
+    padding:30px;
+  }
 }
 </style>
 </head>
