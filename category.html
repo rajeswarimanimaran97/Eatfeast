@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Categories</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,#fbc2a3,#f8b6c1);
+  text-align:center;
+}
+
+/* Heading */
+h1{
+  color:white;
+  padding:20px;
+}
+
+/* Container */
+.container{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap:20px;
+  padding:20px;
+  max-width:900px;
+  margin:auto;
+}
+
+/* Card */
+.card{
+  background:white;
+  padding:12px;
+  border-radius:15px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  transition:0.3s;
+}
+
+/* Hover Effect */
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 25px rgba(0,0,0,0.3);
+}
+
+/* Image */
+.card img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+/* Text */
+.card h3{
+  margin-top:10px;
+  color:#ff4f6d;
+}
+
+/* Remove link style */
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+/* 📱 Mobile */
+@media(max-width:480px){
+  h1{
+    font-size:20px;
+  }
+
+  .card img{
+    height:100px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🍽️ Select Category</h1>
+
+<div class="container">
+
+<a href="menu.html">
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307">
+    <h3>Desserts</h3>
+  </div>
+</a>
+
+<a href="menu.html">
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
+    <h3>Snacks</h3>
+  </div>
+</a>
+
+<a href="menu.html">
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836">
+    <h3>Lunch</h3>
+  </div>
+</a>
+
+<a href="menu.html">
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1493770348161-369560ae357d">
+    <h3>Breakfast</h3>
+  </div>
+</a>
+
+</div>
+
+</body>
+</html>
