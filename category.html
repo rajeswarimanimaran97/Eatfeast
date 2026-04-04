@@ -4,141 +4,71 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EatFeast Categories</title>
-
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial, sans-serif;
-}
-
-/* Body & header */
-body{
-  background:linear-gradient(135deg,#fbc2a3,#f8b6c1);
-}
-.header{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:15px;
-  background:white;
-}
-.logo{
-  width:50px;
-  height:50px;
-  border-radius:50%;
-}
-.header h2{
-  margin-left:10px;
-  color:#ff4f6d;
-}
-
-/* Welcome text */
-#welcome{
-  text-align:center;
-  color:white;
-  margin:20px 0;
-  font-size:20px;
-}
-
-/* Container */
-.container{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:20px;
-  padding:20px;
-  max-width:900px;
-  margin:auto;
-}
-
-/* Card */
-.card{
-  background:white;
-  padding:10px;
-  border-radius:15px;
-  text-align:center;
-  box-shadow:0 8px 20px rgba(0,0,0,0.2);
-  transition:0.3s;
-  cursor:pointer;
-}
-.card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 12px 25px rgba(0,0,0,0.3);
-}
-
-/* Card image */
-.card img{
-  width:100%;
-  height:100px;
-  object-fit:cover;
-  border-radius:10px;
-  margin-bottom:8px;
-}
-
-/* Card title */
-.card h3{
-  color:#ff4f6d;
-  margin:0;
-  font-size:16px;
-}
-
-/* Mobile adjustments */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:linear-gradient(135deg,#fbc2a3,#f8b6c1);text-align:center;padding:20px;}
+.header{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:20px;}
+.header img{width:50px;height:50px;border-radius:50%;object-fit:cover;}
+.header h1{color:white;font-size:28px;}
+.welcome{color:white;margin-bottom:20px;font-size:18px;font-weight:bold;}
+.container{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;padding:20px;max-width:900px;margin:auto;}
+.card{background:white;padding:12px;border-radius:15px;box-shadow:0 8px 20px rgba(0,0,0,0.2);transition:0.3s;}
+.card:hover{transform:translateY(-5px);box-shadow:0 12px 25px rgba(0,0,0,0.3);}
+.card img{width:100%;height:120px;object-fit:cover;border-radius:10px;}
+.card h3{margin-top:10px;color:#ff4f6d;}
+a{text-decoration:none;color:inherit;}
 @media(max-width:480px){
-  .card img{
-    height:80px;
-  }
-  #welcome{
-    font-size:18px;
-  }
+    .header h1{font-size:22px;}
+    .card img{height:100px;}
 }
 </style>
 </head>
-
 <body>
 
 <div class="header">
-  <img src="logo.jpg" class="logo" alt="EatFeast Logo">
-  <h2>EatFeast</h2>
+    <img src="logo.jpg" alt="EatFeast Logo">
+    <h1>EatFeast</h1>
 </div>
 
-<h2 id="welcome"></h2>
+<div class="welcome" id="welcome">Welcome, User!</div>
 
 <div class="container">
 
-  <div class="card" onclick="selectCat('Snacks')">
-    <img src="https://source.unsplash.com/200x150/?snacks" alt="Snacks">
-    <h3>Snacks</h3>
-  </div>
-
-  <div class="card" onclick="selectCat('Lunch')">
-    <img src="https://source.unsplash.com/200x150/?lunch" alt="Lunch">
-    <h3>Lunch</h3>
-  </div>
-
-  <div class="card" onclick="selectCat('Desserts')">
-    <img src="https://source.unsplash.com/200x150/?dessert" alt="Desserts">
+<a href="menu.html">
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307" alt="Desserts">
     <h3>Desserts</h3>
   </div>
+</a>
 
-  <div class="card" onclick="selectCat('Breakfast')">
-    <img src="https://source.unsplash.com/200x150/?breakfast" alt="Breakfast">
+<a href="menu.html">
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092" alt="Snacks">
+    <h3>Snacks</h3>
+  </div>
+</a>
+
+<a href="menu.html">
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836" alt="Lunch">
+    <h3>Lunch</h3>
+  </div>
+</a>
+
+<a href="menu.html">
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1493770348161-369560ae357d" alt="Breakfast">
     <h3>Breakfast</h3>
   </div>
+</a>
 
 </div>
 
 <script>
-// Welcome user
-let user=JSON.parse(localStorage.getItem("user"));
-if(user){
-  document.getElementById("welcome").innerText="Welcome, "+user.name+"! 🍽️";
-}
-
-// Select category and navigate
-function selectCat(cat){
-  localStorage.setItem("category",cat);
-  window.location="menu.html";
+// Display username from localStorage
+const userData = JSON.parse(localStorage.getItem("user"));
+if(userData && userData.name){
+    document.getElementById("welcome").innerText = `Welcome, ${userData.name}!`;
 }
 </script>
 
