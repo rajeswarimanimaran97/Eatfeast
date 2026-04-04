@@ -9,11 +9,13 @@
 body{background:linear-gradient(to right,#fbc2a3,#f8b6c1);text-align:center;padding:20px;}
 .box{background:white;width:90%;max-width:400px;margin:auto;padding:25px;border-radius:15px;box-shadow:0 10px 20px rgba(0,0,0,0.2);}
 h2{color:#ff6b81;margin-bottom:15px;}
-.item{display:flex;justify-content:space-between;margin:10px 0;font-size:16px;}
+.item{display:flex;justify-content:space-between;align-items:center;margin:10px 0;font-size:16px;}
+.item button{background:#ff4f6d;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;transition:0.3s;}
+.item button:hover{background:#ff1c3f;}
 hr{margin:15px 0;}
 .total{display:flex;justify-content:space-between;font-weight:bold;font-size:16px;margin-bottom:20px;}
-button{width:100%;background:#ff6b81;color:white;padding:12px;border:none;border-radius:8px;cursor:pointer;font-size:16px;transition:0.3s;}
-button:hover{background:#ff4f6d;}
+button.checkout{width:100%;background:#34a853;color:white;padding:12px;border:none;border-radius:8px;cursor:pointer;font-size:16px;transition:0.3s;}
+button.checkout:hover{background:#2c8c47;}
 </style>
 </head>
 <body>
@@ -26,37 +28,38 @@ button:hover{background:#ff4f6d;}
   <span>Total</span>
   <span id="totalAmount">₹0</span>
 </div>
-<button id="checkoutBtn">Proceed to Checkout</button>
+<button class="checkout" id="checkoutBtn">Proceed to Summary</button>
 </div>
 
 <script>
-// Get cart from localStorage
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 const cartItemsDiv = document.getElementById("cartItems");
 const totalAmountSpan = document.getElementById("totalAmount");
 
 function renderCart(){
-  cartItemsDiv.innerHTML = '';
-  let total = 0;
-  cart.forEach((item, index)=>{
-    total += item.price;
-    const div = document.createElement("div");
-    div.className = 'item';
-    div.innerHTML = `<span>${item.name}</span><span>₹${item.price}</span>`;
+  cartItemsDiv.innerHTML='';
+  let total=0;
+  if(cart.length===0){cartItemsDiv.innerHTML='<p>Your cart is empty!</p>';totalAmountSpan.innerText='₹0';return;}
+  cart.forEach((item,index)=>{
+    total+=item.price;
+    const div=document.createElement('div');
+    div.className='item';
+    div.innerHTML=`<span>${item.name} - ₹${item.price}</span><button onclick="removeItem(${index})">Remove</button>`;
     cartItemsDiv.appendChild(div);
   });
-  totalAmountSpan.innerText = `₹${total}`;
+  totalAmountSpan.innerText=`₹${total}`;
 }
-
+function removeItem(index){
+  cart.splice(index,1);
+  localStorage.setItem("cart",JSON.stringify(cart));
+  renderCart();
+}
+document.getElementById("checkoutBtn").onclick=()=>{
+  if(cart.length===0){alert("Cart is empty!");return;}
+  window.location.href="summary.html";
+}
 renderCart();
-
-document.getElementById("checkoutBtn").onclick = ()=>{
-  if(cart.length === 0){
-    alert("Cart is empty!");
-  } else {
-    window.location.href = "summary.html";
-  }
-}
 </script>
+
 </body>
 </html>
