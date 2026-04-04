@@ -4,105 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EatFeast Menu</title>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-
-body{
-  background:#ffe6ea;
-  text-align:center;
-  padding:20px;
-}
-
-.header{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  margin-bottom:15px;
-}
-
-.header img{
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  object-fit:cover;
-}
-
-.header h1{
-  color:#ff4f6d;
-  font-size:28px;
-}
-
-.welcome{
-  color:#ff4f6d;
-  margin-bottom:20px;
-  font-size:18px;
-  font-weight:bold;
-}
-
-.container{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:20px;
-  padding:20px;
-  max-width:1000px;
-  margin:auto;
-}
-
-.food{
-  background:white;
-  padding:15px;
-  border-radius:15px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.2);
-  transition:0.3s;
-}
-
-.food:hover{
-  transform:translateY(-5px);
-  box-shadow:0 12px 25px rgba(0,0,0,0.3);
-}
-
-/* ✅ IMAGE FIX */
-.food img{
-  width:100%;
-  height:150px;
-  object-fit:cover;
-  border-radius:12px;
-}
-
-.food h3{
-  margin-top:10px;
-  color:#ff4f6d;
-}
-
-.food p{
-  margin:8px 0;
-  font-weight:bold;
-}
-
-button{
-  width:100%;
-  background:#ff6b81;
-  color:white;
-  border:none;
-  padding:10px;
-  border-radius:8px;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-button:hover{
-  background:#ff4f6d;
-}
-
+body{background:#ffe6ea;text-align:center;padding:20px;}
+.header{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:15px;}
+.header img{width:50px;height:50px;border-radius:50%;object-fit:cover;}
+.header h1{color:#ff4f6d;font-size:28px;}
+.welcome{color:#ff4f6d;margin-bottom:20px;font-size:18px;font-weight:bold;}
+.container{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;padding:20px;max-width:1000px;margin:auto;}
+.food{background:white;padding:15px;border-radius:15px;box-shadow:0 8px 20px rgba(0,0,0,0.2);transition:0.3s;}
+.food:hover{transform:translateY(-5px);box-shadow:0 12px 25px rgba(0,0,0,0.3);}
+.food img{width:100%;height:130px;object-fit:cover;border-radius:10px;cursor:pointer;}
+.food h3{margin-top:10px;color:#ff4f6d;}
+.food p{margin:8px 0;font-weight:bold;}
+button{width:100%;background:#ff6b81;color:white;border:none;padding:10px;border-radius:8px;cursor:pointer;transition:0.3s;}
+button:hover{background:#ff4f6d;}
 @media(max-width:480px){
   .header h1{font-size:22px;}
-  .food img{height:120px;}
+  .food img{height:110px;}
 }
 </style>
 </head>
-
 <body>
 
 <div class="header">
@@ -112,67 +34,58 @@ button:hover{
 
 <div class="welcome" id="welcome">Welcome!</div>
 
-<div class="container"></div>
+<div class="container">
+  <!-- Menu items will appear dynamically -->
+</div>
 
 <script>
-
-// Username display
+// Display username
 const userData = JSON.parse(localStorage.getItem("user"));
 if(userData && userData.name){
-  document.getElementById("welcome").innerText = `Welcome, ${userData.name}!`;
+    document.getElementById("welcome").innerText = `Welcome, ${userData.name}!`;
 }
 
-// Category from URL
+// Get category from URL (e.g., menu.html?cat=breakfast)
 const urlParams = new URLSearchParams(window.location.search);
 const category = urlParams.get("cat");
 
-// ✅ ALL CORRECT IMAGE LINKS
+// Menu items with CRT-ready image links
 const menuItems = {
-
   desserts: [
-    {name:"Chocolate Cake", price:150, img:"https://images.pexels.com/photos/132694/pexels-photo-132694.jpeg"},
-    {name:"Ice Cream", price:80, img:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80"},
-    {name:"Cupcake", price:100, img:"https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=800&q=80"}
+    {name:"Chocolate Cake", price:150, img:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=400&q=80"},
+    {name:"Ice Cream", price:80, img:"https://images.unsplash.com/photo-1599785209707-3c3b22e58d56?auto=format&fit=crop&w=400&q=80"},
+    {name:"Cupcake", price:100, img:"https://images.unsplash.com/photo-1606755962773-0b9b287c2d19?auto=format&fit=crop&w=400&q=80"}
   ],
-
   snacks: [
-    {name:"Pizza", price:250, img:"https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg"},
-    {name:"Burger", price:120, img:"https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg"},
-    {name:"Fries", price:80, img:"https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg"}
-    {name:"Pav Bhaji", price:60, img:"https://images.pexels.com/photos/5410400/pexels-photo-5410400.jpeg"}
-    {name:"Shawarma", price:120, img:"https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg"}
-    {name:"Samosa", price:40, img:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"} 
+    {name:"Pizza", price:250, img:"https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=400&q=80"},
+    {name:"Burger", price:120, img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80"},
+    {name:"Fries", price:80, img:"https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=400&q=80"}
   ],
-
   lunch: [
-    {name:"Meals", price:200, img:"https://images.pexels.com/photos/723198/pexels-photo-723198.jpeg"},
-    {name:"Chicken Briyani", price:180, img:"https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg"},
-    {name:"Noodles", price:150, img:"https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg"}
-    {name:"Chicken Tikka Masala", price:180, img:"https://images.unsplash.com/photo-1565557623262-b51c2513a641"}
+    {name:"Rice Plate", price:200, img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=400&q=80"},
+    {name:"Curry", price:180, img:"https://images.unsplash.com/photo-1606755962773-0b9b287c2d19?auto=format&fit=crop&w=400&q=80"},
+    {name:"Noodles", price:150, img:"https://images.unsplash.com/photo-1623944928123-b3676e2b3f18?auto=format&fit=crop&w=400&q=80"}
   ],
-
   breakfast: [
-    {name:"Chappathi", price:50, img:"https://images.pexels.com/photos/12737658/pexels-photo-12737658.jpeg"},
-    {name:"Dosa", price:80, img:"https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg"},
-    {name:"idli", price:60, img:"https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=800"}
+    {name:"Idli", price:50, img:"https://images.unsplash.com/photo-1584270354949-2b6c4b22c7cb?auto=format&fit=crop&w=400&q=80"},
+    {name:"Dosa", price:60, img:"https://images.unsplash.com/photo-1571847143446-28d43f6d99d8?auto=format&fit=crop&w=400&q=80"},
+    {name:"Poori", price:50, img:"https://cdn.pixabay.com/photo/2022/05/26/15/01/puri-poori-sabzi-snack-indian-7222866_1280.jpg"}
   ]
-
 };
 
-// Generate menu
+// Generate menu dynamically
 const container = document.querySelector(".container");
-
 (menuItems[category] || []).forEach(item => {
   const div = document.createElement("div");
   div.classList.add("food");
-
   div.innerHTML = `
-    <img src="${item.img}" alt="${item.name}">
+    <a href="${item.img}" target="_blank">
+      <img src="${item.img}" alt="${item.name}">
+    </a>
     <h3>${item.name}</h3>
     <p>₹${item.price}</p>
     <button onclick="addToCart('${item.name}', ${item.price})">Add</button>
   `;
-
   container.appendChild(div);
 });
 
@@ -181,8 +94,8 @@ function addToCart(name, price){
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   cart.push({name, price});
   localStorage.setItem("cart", JSON.stringify(cart));
+  alert(`${name} added to cart!`);
 }
-
 </script>
 
 </body>
