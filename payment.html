@@ -4,142 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Payment</title>
-
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial, sans-serif;
-}
-
-body{
-  min-height:100vh;
-  background:linear-gradient(135deg,#fbc2a3,#f8b6c1);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-}
-
-.box{
-  width:100%;
-  max-width:400px;
-  background:white;
-  padding:25px 20px;
-  border-radius:15px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
-  text-align:center;
-}
-
-h2{
-  color:#6a5acd;
-  margin-bottom:15px;
-}
-
-.icons{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  margin:15px 0;
-}
-
-.icons a{
-  display:block;
-  transition:0.3s;
-}
-
-.icons a:hover{
-  transform:scale(1.1);
-}
-
-.icons img{
-  width:70px;
-  height:70px;
-  border-radius:12px;
-  object-fit:cover;
-  cursor:pointer;
-  box-shadow:0 4px 12px rgba(0,0,0,0.2);
-}
-
-.upi{
-  margin:10px 0;
-  font-weight:bold;
-  color:#333;
-}
-
-button{
-  width:100%;
-  background:#34a853;
-  color:white;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  font-size:15px;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-button:hover{
-  background:#2c8c47;
-}
-
-.success{
-  margin-top:20px;
-  color:#28a745;
-  font-weight:bold;
-  font-size:16px;
-  display:none; /* hidden initially */
-}
-
-/* 📱 Mobile */
-@media(max-width:480px){
-  .icons img{
-    width:60px;
-    height:60px;
-  }
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{min-height:100vh;background:linear-gradient(135deg,#fbc2a3,#f8b6c1);display:flex;justify-content:center;align-items:center;padding:20px;}
+.box{width:100%;max-width:400px;background:white;padding:25px 20px;border-radius:15px;box-shadow:0 10px 25px rgba(0,0,0,0.2);text-align:center;}
+h2{color:#6a5acd;margin-bottom:15px;}
+.icons{display:flex;justify-content:center;gap:15px;margin:15px 0;}
+.icons img{width:70px;height:70px;}
+.upi{margin:10px 0;font-weight:bold;color:#333;}
+button{width:100%;background:#34a853;color:white;padding:12px;border:none;border-radius:8px;font-size:15px;cursor:pointer;transition:0.3s;}
+button:hover{background:#2c8c47;}
+.success{margin-top:20px;color:#28a745;font-weight:bold;display:none;}
 </style>
 </head>
-
 <body>
 
 <div class="box">
-
-<h2>💳 Choose Payment</h2>
-
+<h2>Choose Payment</h2>
 <div class="icons">
-  <a href="https://pay.google.com/" target="_blank">
-    <img src="https://img.icons8.com/color/96/google-pay.png" alt="GPay">
-  </a>
-  <a href="https://www.bhimupi.org.in/" target="_blank">
-    <img src="https://img.icons8.com/color/96/bhim.png" alt="UPI">
-  </a>
+  <img src="https://img.icons8.com/color/96/google-pay.png" alt="GPay">
+  <img src="https://img.icons8.com/color/96/bhim.png" alt="UPI">
 </div>
-
 <p class="upi">UPI ID: eatfeast@upi</p>
-
 <button id="payBtn">Pay Now</button>
-
-<div class="success" id="successMsg">
-  ✅ Order Placed Successfully!
+<div class="success" id="successMsg">✅ Order Placed Successfully!</div>
 </div>
 
 <script>
-const payBtn = document.getElementById("payBtn");
-const successMsg = document.getElementById("successMsg");
-
-payBtn.addEventListener("click", () => {
-  // Show success message
-  successMsg.style.display = "block";
-  
-  // Optional: disable button after payment
-  payBtn.disabled = true;
-  payBtn.innerText = "Payment Done!";
-  
-  // Optional: Clear cart from localStorage after payment
+document.getElementById("payBtn").onclick = ()=>{
   localStorage.removeItem("cart");
-});
+  document.getElementById("successMsg").style.display='block';
+  setTimeout(()=>{window.location.href="menu.html";},2000);
+}
 </script>
 
 </body>
