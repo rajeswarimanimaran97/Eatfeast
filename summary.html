@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Order Summary</title>
+<title>🧾 Order Summary</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, sans-serif;}
-body{min-height:100vh;background:linear-gradient(135deg,#fbc2a3,#f8b6c1);display:flex;justify-content:center;align-items:center;padding:20px;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:linear-gradient(135deg,#fbc2a3,#f8b6c1);display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;}
 .box{width:100%;max-width:400px;background:white;padding:25px 20px;border-radius:15px;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
 h2{text-align:center;color:#ff4f6d;margin-bottom:20px;}
 .item{display:flex;justify-content:space-between;margin:10px 0;font-size:15px;}
@@ -21,154 +20,44 @@ button:hover{background:#ff4f6d;}
 
 <div class="box">
 <h2>🧾 Order Summary</h2>
-<div id="items"></div>
+<div id="summaryItems"></div>
 <hr>
-<div class="total" id="total"></div>
-<button onclick="pay()">Buy Now</button>
+<div class="total">
+  <span>Total</span>
+  <span id="summaryTotal">₹0</span>
+</div>
+<button id="buyBtn">Buy Now</button>
 </div>
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let itemsDiv=document.getElementById("items");
-let totalDiv=document.getElementById("total");
+const summaryItemsDiv = document.getElementById("summaryItems");
+const summaryTotalSpan = document.getElementById("summaryTotal");
 
-let total=0;
-cart.forEach(i=>{
-  itemsDiv.innerHTML+=`<div class="item"><span>${i.name} x ${i.qty}</span><span>₹${i.price*i.qty}</span></div>`;
-  total += i.price*i.qty;
-});
-totalDiv.innerHTML=`<span>Total</span><span>₹${total}</span>`;
+function renderSummary(){
+  summaryItemsDiv.innerHTML = '';
+  let total = 0;
+  cart.forEach(item=>{
+    total += item.price;
+    const div = document.createElement("div");
+    div.className = 'item';
+    div.innerHTML = `<span>${item.name}</span><span>₹${item.price}</span>`;
+    summaryItemsDiv.appendChild(div);
+  });
+  summaryTotalSpan.innerText = `₹${total}`;
+}
 
-function pay(){ window.location="payment.html"; }
+renderSummary();
+
+document.getElementById("buyBtn").onclick = ()=>{
+  if(cart.length === 0){
+    alert("Cart is empty!");
+  } else {
+    localStorage.removeItem("cart"); // clear cart
+    window.location.href = "success.html";
+  }
+}
 </script>
-
-</body>
-</html>ad>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Order Summary</title>
-
-<style>
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial, sans-serif;
-}
-
-body{
-  min-height:100vh;
-  background:linear-gradient(135deg,#fbc2a3,#f8b6c1);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-}
-
-/* Box */
-.box{
-  width:100%;
-  max-width:400px;
-  background:white;
-  padding:25px 20px;
-  border-radius:15px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
-}
-
-/* Heading */
-h2{
-  text-align:center;
-  color:#ff4f6d;
-  margin-bottom:20px;
-}
-
-/* Items */
-.item{
-  display:flex;
-  justify-content:space-between;
-  margin:10px 0;
-  font-size:15px;
-}
-
-/* Divider */
-hr{
-  margin:15px 0;
-}
-
-/* Total */
-.total{
-  display:flex;
-  justify-content:space-between;
-  font-weight:bold;
-  font-size:16px;
-  margin-bottom:20px;
-}
-
-/* Button */
-button{
-  width:100%;
-  background:#ff6b81;
-  color:white;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:15px;
-  transition:0.3s;
-}
-
-button:hover{
-  background:#ff4f6d;
-}
-
-/* Link reset */
-a{
-  text-decoration:none;
-}
-
-/* 📱 Mobile */
-@media(max-width:480px){
-  .box{
-    padding:20px 15px;
-  }
-
-  .item{
-    font-size:14px;
-  }
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="box">
-
-<h2>🧾 Order Summary</h2>
-
-<div class="item">
-  <span>Burger</span>
-  <span>₹120</span>
-</div>
-
-<div class="item">
-  <span>Pizza</span>
-  <span>₹250</span>
-</div>
-
-<hr>
-
-<div class="total">
-  <span>Total</span>
-  <span>₹370</span>
-</div>
-
-<a href="payment.html">
-  <button>Buy Now</button>
-</a>
-
-</div>
 
 </body>
 </html>
