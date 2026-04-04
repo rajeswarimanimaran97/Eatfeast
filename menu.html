@@ -7,10 +7,10 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
 body{background:#ffe6ea;text-align:center;padding:20px;}
-.header{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:15px;}
-.header img{width:50px;height:50px;border-radius:50%;object-fit:cover;}
+.header{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:15px;position:relative;}
+.header img.logo{width:50px;height:50px;border-radius:50%;object-fit:cover;}
 .header h1{color:#ff4f6d;font-size:28px;}
-#welcome{color:#ff4f6d;margin-bottom:20px;font-size:18px;font-weight:bold;}
+.welcome{color:#ff4f6d;margin-bottom:20px;font-size:18px;font-weight:bold;}
 .container{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;padding:20px;max-width:1000px;margin:auto;}
 .food{background:white;padding:15px;border-radius:15px;box-shadow:0 8px 20px rgba(0,0,0,0.2);transition:0.3s;}
 .food:hover{transform:translateY(-5px);box-shadow:0 12px 25px rgba(0,0,0,0.3);}
@@ -19,16 +19,16 @@ body{background:#ffe6ea;text-align:center;padding:20px;}
 .food p{margin:8px 0;font-weight:bold;}
 button{width:100%;background:#ff6b81;color:white;border:none;padding:10px;border-radius:8px;cursor:pointer;transition:0.3s;}
 button:hover{background:#ff4f6d;}
-#cart-icon{margin-left:auto; position:relative; cursor:pointer;}
+#cart-icon{position:absolute;right:0;top:0;cursor:pointer;}
 #cart-icon img{width:35px;}
-#cart-count{position:absolute; top:-8px; right:-8px; background:red; color:white; font-size:14px; font-weight:bold; padding:2px 6px; border-radius:50%;}
+#cart-count{position:absolute;top:-8px;right:-8px;background:red;color:white;font-size:14px;font-weight:bold;padding:2px 6px;border-radius:50%;}
 @media(max-width:480px){.header h1{font-size:22px;}.food img{height:110px;}}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <img src="logo.jpg" alt="EatFeast Logo">
+  <img src="logo.jpg" alt="EatFeast Logo" class="logo">
   <h1>EatFeast Menu</h1>
   <div id="cart-icon">
     <img src="https://img.icons8.com/ios-filled/50/shopping-cart.png" alt="Cart">
@@ -36,21 +36,30 @@ button:hover{background:#ff4f6d;}
   </div>
 </div>
 
-<div id="welcome">Welcome!</div>
+<div class="welcome" id="welcome">Welcome!</div>
+
 <div class="container"></div>
 
 <script>
 // Display username
-const userData = JSON.parse(localStorage.getItem("user")) || {name: "Guest"};
-document.getElementById("welcome").innerText = `Welcome, ${userData.name}!`;
+const userData = JSON.parse(localStorage.getItem("user"));
+if(userData && userData.name){
+    document.getElementById("welcome").innerText = `Welcome, ${userData.name}!`;
+}
 
-// Cart icon
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  document.getElementById("cart-count").innerText = cart.length;
+// Cart count
+function updateCartCount(){
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    document.getElementById("cart-count").innerText = cart.length;
 }
 updateCartCount();
-document.getElementById("cart-icon").onclick = ()=> window.location.href="cart.html";
+
+// Cart icon click -> cart page
+document.getElementById("cart-icon").onclick = ()=>{ window.location.href="cart.html"; }
+
+// Get category from URL
+const urlParams = new URLSearchParams(window.location.search);
+const category = urlParams.get("cat"); // snacks, breakfast, lunch, desserts
 
 // Menu items
 const menuItems = {
@@ -62,16 +71,12 @@ const menuItems = {
   snacks: [
     {name:"Pizza", price:250, img:"https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg"},
     {name:"Burger", price:120, img:"https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg"},
-    {name:"Fries", price:80, img:"https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg"},
-    {name:"Pav Bhaji", price:60, img:"https://images.pexels.com/photos/5410400/pexels-photo-5410400.jpeg"},
-    {name:"Shawarma", price:120, img:"https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg"},
-    {name:"Samosa", price:40, img:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"}
+    {name:"Fries", price:80, img:"https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg"}
   ],
   lunch: [
     {name:"Meals", price:200, img:"https://images.pexels.com/photos/723198/pexels-photo-723198.jpeg"},
     {name:"Chicken Briyani", price:180, img:"https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg"},
-    {name:"Noodles", price:150, img:"https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg"},
-    {name:"Chicken Tikka Masala", price:180, img:"https://images.unsplash.com/photo-1565557623262-b51c2513a641"}
+    {name:"Noodles", price:150, img:"https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg"}
   ],
   breakfast: [
     {name:"Chappathi", price:50, img:"https://images.pexels.com/photos/12737658/pexels-photo-12737658.jpeg"},
@@ -80,31 +85,29 @@ const menuItems = {
   ]
 };
 
-// Display all categories
+// Render category
 const container = document.querySelector(".container");
-for(let cat in menuItems){
-  menuItems[cat].forEach(item=>{
-    const div = document.createElement("div");
-    div.className = "food";
-    div.innerHTML = `
-      <a href="${item.img}" target="_blank"><img src="${item.img}" alt="${item.name}"></a>
-      <h3>${item.name}</h3>
-      <p>₹${item.price}</p>
-      <button onclick="addToCart('${item.name}',${item.price})">Add</button>
-    `;
-    container.appendChild(div);
-  });
-}
+(menuItems[category] || []).forEach(item=>{
+  const div = document.createElement("div");
+  div.className = "food";
+  div.innerHTML = `
+    <a href="${item.img}" target="_blank">
+      <img src="${item.img}" alt="${item.name}">
+    </a>
+    <h3>${item.name}</h3>
+    <p>₹${item.price}</p>
+    <button onclick="addToCart('${item.name}',${item.price})">Add</button>
+  `;
+  container.appendChild(div);
+});
 
 // Add to cart function
 function addToCart(name, price){
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.push({name, price});
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateCartCount();
-  alert(`${name} added to cart!`);
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push({name, price});
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount(); // just update the trolley count
 }
 </script>
-
 </body>
 </html>
