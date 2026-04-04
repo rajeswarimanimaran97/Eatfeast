@@ -1,38 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Category</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EatFeast Categories</title>
+
 <style>
-body{font-family:Arial;margin:0;background:linear-gradient(135deg,#fbc2a3,#f8b6c1);}
-.header{display:flex;justify-content:center;align-items:center;padding:15px;background:white;}
-.logo{width:50px;height:50px;border-radius:50%;}
-.container{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;padding:20px;}
-.card{background:white;padding:20px;border-radius:10px;text-align:center;cursor:pointer;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+/* Body & header */
+body{
+  background:linear-gradient(135deg,#fbc2a3,#f8b6c1);
+}
+.header{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+  background:white;
+}
+.logo{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+}
+.header h2{
+  margin-left:10px;
+  color:#ff4f6d;
+}
+
+/* Welcome text */
+#welcome{
+  text-align:center;
+  color:white;
+  margin:20px 0;
+  font-size:20px;
+}
+
+/* Container */
+.container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:20px;
+  padding:20px;
+  max-width:900px;
+  margin:auto;
+}
+
+/* Card */
+.card{
+  background:white;
+  padding:10px;
+  border-radius:15px;
+  text-align:center;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  transition:0.3s;
+  cursor:pointer;
+}
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 25px rgba(0,0,0,0.3);
+}
+
+/* Card image */
+.card img{
+  width:100%;
+  height:100px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-bottom:8px;
+}
+
+/* Card title */
+.card h3{
+  color:#ff4f6d;
+  margin:0;
+  font-size:16px;
+}
+
+/* Mobile adjustments */
+@media(max-width:480px){
+  .card img{
+    height:80px;
+  }
+  #welcome{
+    font-size:18px;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-<img src="logo.jpg" class="logo">
-<h2>EatFeast</h2>
+  <img src="logo.jpg" class="logo" alt="EatFeast Logo">
+  <h2>EatFeast</h2>
 </div>
 
-<h2 id="welcome" style="text-align:center;"></h2>
+<h2 id="welcome"></h2>
 
 <div class="container">
-<div class="card" onclick="selectCat('Snacks')">Snacks</div>
-<div class="card" onclick="selectCat('Lunch')">Lunch</div>
-<div class="card" onclick="selectCat('Desserts')">Desserts</div>
+
+  <div class="card" onclick="selectCat('Snacks')">
+    <img src="https://source.unsplash.com/200x150/?snacks" alt="Snacks">
+    <h3>Snacks</h3>
+  </div>
+
+  <div class="card" onclick="selectCat('Lunch')">
+    <img src="https://source.unsplash.com/200x150/?lunch" alt="Lunch">
+    <h3>Lunch</h3>
+  </div>
+
+  <div class="card" onclick="selectCat('Desserts')">
+    <img src="https://source.unsplash.com/200x150/?dessert" alt="Desserts">
+    <h3>Desserts</h3>
+  </div>
+
+  <div class="card" onclick="selectCat('Breakfast')">
+    <img src="https://source.unsplash.com/200x150/?breakfast" alt="Breakfast">
+    <h3>Breakfast</h3>
+  </div>
+
 </div>
 
 <script>
+// Welcome user
 let user=JSON.parse(localStorage.getItem("user"));
-document.getElementById("welcome").innerText="Welcome "+user.name;
+if(user){
+  document.getElementById("welcome").innerText="Welcome, "+user.name+"! 🍽️";
+}
 
+// Select category and navigate
 function selectCat(cat){
-localStorage.setItem("category",cat);
-window.location="menu.html";
+  localStorage.setItem("category",cat);
+  window.location="menu.html";
 }
 </script>
 
