@@ -3,60 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🧾 Order Summary</title>
+<title>Order Summary</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body{background:linear-gradient(135deg,#fbc2a3,#f8b6c1);display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;}
-.box{width:100%;max-width:400px;background:white;padding:25px 20px;border-radius:15px;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
-h2{text-align:center;color:#ff4f6d;margin-bottom:20px;}
-.item{display:flex;justify-content:space-between;margin:10px 0;font-size:15px;}
-hr{margin:15px 0;}
+body{background:linear-gradient(to right,#ffe6ea,#f8b6c1);text-align:center;padding:20px;}
+.box{background:white;width:90%;max-width:400px;margin:auto;padding:25px;border-radius:15px;box-shadow:0 10px 20px rgba(0,0,0,0.2);}
+h2{color:#ff6b81;margin-bottom:15px;}
+.item{display:flex;justify-content:space-between;margin:10px 0;font-size:16px;}
 .total{display:flex;justify-content:space-between;font-weight:bold;font-size:16px;margin-bottom:20px;}
-button{width:100%;background:#ff6b81;color:white;padding:12px;border:none;border-radius:8px;cursor:pointer;font-size:15px;transition:0.3s;}
-button:hover{background:#ff4f6d;}
+button{width:100%;background:#34a853;color:white;padding:12px;border:none;border-radius:8px;cursor:pointer;font-size:16px;transition:0.3s;}
+button:hover{background:#2c8c47;}
 </style>
 </head>
 <body>
 
 <div class="box">
-<h2>🧾 Order Summary</h2>
+<h2>Order Summary</h2>
 <div id="summaryItems"></div>
 <hr>
 <div class="total">
   <span>Total</span>
-  <span id="summaryTotal">₹0</span>
+  <span id="totalAmount">₹0</span>
 </div>
-<button id="buyBtn">Buy Now</button>
+<button id="payBtn">Proceed to Payment</button>
 </div>
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 const summaryItemsDiv = document.getElementById("summaryItems");
-const summaryTotalSpan = document.getElementById("summaryTotal");
+const totalAmountSpan = document.getElementById("totalAmount");
 
 function renderSummary(){
-  summaryItemsDiv.innerHTML = '';
-  let total = 0;
-  cart.forEach(item=>{
-    total += item.price;
-    const div = document.createElement("div");
-    div.className = 'item';
-    div.innerHTML = `<span>${item.name}</span><span>₹${item.price}</span>`;
-    summaryItemsDiv.appendChild(div);
-  });
-  summaryTotalSpan.innerText = `₹${total}`;
+  summaryItemsDiv.innerHTML='';
+  let total=0;
+  if(cart.length===0){summaryItemsDiv.innerHTML='<p>Your cart is empty!</p>';totalAmountSpan.innerText='₹0';return;}
+  cart.forEach(item=>{total+=item.price;const div=document.createElement('div');div.className='item';div.innerHTML=`<span>${item.name}</span><span>₹${item.price}</span>`;summaryItemsDiv.appendChild(div);});
+  totalAmountSpan.innerText=`₹${total}`;
+}
+
+document.getElementById("payBtn").onclick=()=>{
+  if(cart.length===0){alert("Cart is empty!");return;}
+  window.location.href="payment.html";
 }
 
 renderSummary();
-
-document.getElementById("buyBtn").onclick = ()=>{
-  if(cart.length === 0){
-    alert("Cart is empty!");
-  } else {
-    localStorage.removeItem("cart"); // clear cart
-    window.location.href = "success.html";
-  }
-}
 </script>
 
 </body>
