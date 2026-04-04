@@ -34,28 +34,28 @@ a{text-decoration:none;color:inherit;}
 
 <div class="container">
 
-<a href="menu.html">
+<a href="menu.html?cat=desserts">
   <div class="card">
-    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307" alt="Desserts">
+    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587" alt="Desserts">
     <h3>Desserts</h3>
   </div>
 </a>
 
-<a href="menu.html">
+<a href="menu.html?cat=snacks">
   <div class="card">
     <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092" alt="Snacks">
     <h3>Snacks</h3>
   </div>
 </a>
 
-<a href="menu.html">
+<a href="menu.html?cat=lunch">
   <div class="card">
     <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836" alt="Lunch">
     <h3>Lunch</h3>
   </div>
 </a>
 
-<a href="menu.html">
+<a href="menu.html?cat=breakfast">
   <div class="card">
     <img src="https://images.unsplash.com/photo-1493770348161-369560ae357d" alt="Breakfast">
     <h3>Breakfast</h3>
@@ -65,7 +65,7 @@ a{text-decoration:none;color:inherit;}
 </div>
 
 <script>
-// Display username from localStorage
+// Show logged-in username from localStorage
 const userData = JSON.parse(localStorage.getItem("user"));
 if(userData && userData.name){
     document.getElementById("welcome").innerText = `Welcome, ${userData.name}!`;
