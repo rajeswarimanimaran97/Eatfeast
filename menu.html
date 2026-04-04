@@ -1,27 +1,87 @@
-<div class="food">
-  <img src="https://source.unsplash.com/300x200/?burger" alt="Burger">
-  <h3>Burger</h3>
-  <p>₹120</p>
-  <button onclick="add('Burger',120)">Add</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EatFeast Menu</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, sans-serif;}
+body{background:#ffe6ea;text-align:center;padding:20px;}
+.header{display:flex;align-items:center;justify-content:center;margin-bottom:15px;}
+.header img{width:50px;height:50px;border-radius:50%;}
+.header h2{margin-left:10px;color:#ff4f6d;}
+.container{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;max-width:1000px;margin:auto;}
+.food{background:white;padding:15px;border-radius:15px;box-shadow:0 8px 20px rgba(0,0,0,0.2);transition:0.3s;}
+.food:hover{transform:translateY(-5px);box-shadow:0 12px 25px rgba(0,0,0,0.3);}
+.food img{width:100%;height:130px;object-fit:cover;border-radius:10px;}
+.food h3{margin-top:10px;color:#ff4f6d;}
+.food p{margin:8px 0;font-weight:bold;}
+button{width:100%;background:#ff6b81;color:white;border:none;padding:10px;border-radius:8px;cursor:pointer;transition:0.3s;}
+button:hover{background:#ff4f6d;}
+#cart-count{position:fixed;top:15px;right:15px;background:#ff6b81;color:white;padding:10px 12px;border-radius:50%;font-weight:bold;cursor:pointer;}
+@media(max-width:480px){.food img{height:110px;}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <img src="logo.jpg" alt="EatFeast Logo">
+  <h2>EatFeast Menu</h2>
 </div>
 
-<div class="food">
-  <img src="https://source.unsplash.com/300x200/?pizza" alt="Pizza">
-  <h3>Pizza</h3>
-  <p>₹250</p>
-  <button onclick="add('Pizza',250)">Add</button>
+<div id="cart-count" onclick="goToCart()">🛒 0</div>
+
+<div class="container" id="menu-container">
+  <!-- JS will populate items -->
 </div>
 
-<div class="food">
-  <img src="https://source.unsplash.com/300x200/?fries" alt="Fries">
-  <h3>Fries</h3>
-  <p>₹80</p>
-  <button onclick="add('Fries',80)">Add</button>
-</div>
+<script>
+// Get user from login
+let user = JSON.parse(localStorage.getItem("user"));
+if(!user) { window.location="index.html"; }
 
-<div class="food">
-  <img src="https://source.unsplash.com/300x200/?juice" alt="Juice">
-  <h3>Juice</h3>
-  <p>₹60</p>
-  <button onclick="add('Juice',60)">Add</button>
-</div>
+// Menu items
+const menuItems = [
+  {name:"Burger",price:120,img:"https://source.unsplash.com/300x200/?burger"},
+  {name:"Pizza",price:250,img:"https://source.unsplash.com/300x200/?pizza"},
+  {name:"Fries",price:80,img:"https://source.unsplash.com/300x200/?fries"},
+  {name:"Juice",price:60,img:"https://source.unsplash.com/300x200/?juice"}
+];
+
+// Render menu
+const container = document.getElementById("menu-container");
+menuItems.forEach(item=>{
+  const div = document.createElement("div");
+  div.className="food";
+  div.innerHTML=`
+    <img src="${item.img}" alt="${item.name}">
+    <h3>${item.name}</h3>
+    <p>₹${item.price}</p>
+    <button onclick="add('${item.name}',${item.price})">Add</button>
+  `;
+  container.appendChild(div);
+});
+
+// Add to cart
+function add(name,price){
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let found = cart.find(i=>i.name===name);
+  if(found){ found.qty++; } else { cart.push({name,price,qty:1}); }
+  localStorage.setItem("cart",JSON.stringify(cart));
+  updateCartCount();
+}
+
+// Update cart count
+function updateCartCount(){
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let total = cart.reduce((a,i)=>a+i.qty,0);
+  document.getElementById("cart-count").innerText="🛒 "+total;
+}
+updateCartCount();
+
+// Go to cart
+function goToCart(){ window.location="cart.html"; }
+</script>
+
+</body>
+</html>
