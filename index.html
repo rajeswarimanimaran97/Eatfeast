@@ -1,62 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EatFeast Login</title>
 <style>
-body{font-family:Arial;margin:0;background:linear-gradient(135deg,#fbc2a3,#f8b6c1);}
-.header{display:flex;justify-content:center;align-items:center;padding:15px;background:white;}
-.logo{width:50px;height:50px;border-radius:50%;}
-h2{color:#ff4f6d;margin-left:10px;}
-.box{background:white;padding:25px;border-radius:15px;width:300px;margin:50px auto;text-align:center;}
-input{width:100%;padding:10px;margin:10px 0;border-radius:8px;border:1px solid #ccc;}
-button{width:100%;padding:10px;background:#ff6b81;color:white;border:none;border-radius:8px;}
-#msg{margin-top:10px;font-size:14px;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;background:linear-gradient(135deg,#fbc2a3,#f8b6c1);display:flex;justify-content:center;align-items:center;}
+.container{width:100%;padding:20px;}
+.login-box{width:100%;max-width:380px;margin:auto;background:#ffffff;padding:30px 25px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.2);text-align:center;}
+.login-box img{
+    width:100px;          /* smaller logo */
+    height:100px;
+    margin-bottom:15px;
+    border-radius:50%;     /* circular */
+    object-fit:cover;      /* scales nicely */
+}
+.login-box h2{margin-bottom:20px;color:#ff4f6d;}
+.input-group{margin-bottom:15px;}
+.input-group input{width:100%;padding:12px;border-radius:8px;border:1px solid #ccc;font-size:14px;}
+.input-group input:focus{border-color:#ff6b81;outline:none;}
+input::placeholder{color:#999;}
+.login-btn{width:100%;padding:12px;background:#ff6b81;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;}
+.login-btn:hover{background:#ff4f6d;}
+.extra-links{margin-top:15px;font-size:13px;}
+.extra-links a{color:#ff4f6d;text-decoration:none;}
+.extra-links a:hover{text-decoration:underline;}
+.success-msg{margin-top:15px;color:green;font-weight:bold;}
+.error-msg{margin-top:15px;color:red;font-weight:bold;}
+@media (max-width:480px){
+    .login-box{padding:25px 20px;}
+    .login-box img{width:80px;height:80px;}
+    .login-box h2{font-size:20px;}
+}
 </style>
 </head>
-
 <body>
 
-<div class="header">
-<img src="logo.jpg" class="logo">
-<h2>EatFeast</h2>
+<div class="container">
+<div class="login-box">
+
+    <img src="logo.jpg" alt="EatFeast Logo">
+
+    <h2>Customer Login</h2>
+
+    <div class="input-group">
+        <input type="text" id="username" placeholder="Username" required>
+    </div>
+
+    <div class="input-group">
+        <input type="tel" id="phone" placeholder="Phone Number" pattern="[0-9]{10}" maxlength="10" required>
+    </div>
+
+    <button class="login-btn" onclick="login()">Login</button>
+
+    <div class="success-msg" id="success"></div>
+    <div class="error-msg" id="error"></div>
+
+    <div class="extra-links">
+        <p><a href="#" onclick="forgot()">Forgot Password?</a></p>
+        <p>New user? <a href="#">Sign Up</a></p>
+    </div>
+
 </div>
-
-<div class="box">
-<h3>Login</h3>
-
-<form id="form">
-<input type="text" id="name" placeholder="Username" required>
-<input type="tel" id="phone" placeholder="Phone" required>
-<button>Login</button>
-</form>
-
-<p id="msg"></p>
-<p><a href="#" onclick="forgot()">Forgot Password?</a></p>
 </div>
 
 <script>
-const form=document.getElementById("form");
-const msg=document.getElementById("msg");
+// Login function
+function login(){
+    const name = document.getElementById("username").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const success = document.getElementById("success");
+    const error = document.getElementById("error");
+    success.innerText=""; error.innerText="";
 
-form.addEventListener("submit",e=>{
-e.preventDefault();
+    if(name === "" || phone === "" || phone.length!==10){
+        error.innerText="Please enter valid username and 10-digit phone number.";
+        return;
+    }
 
-let name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
+    // Save user to localStorage
+    const user = {name, phone};
+    localStorage.setItem("user", JSON.stringify(user));
 
-if(name.length<3){msg.style.color="red";msg.innerText="Invalid name";return;}
-if(phone.length!=10){msg.style.color="red";msg.innerText="Invalid phone";return;}
+    success.innerText = "✅ Login Successful! Redirecting...";
+    setTimeout(()=>{ window.location="category.html"; },1500);
+}
 
-localStorage.setItem("user",JSON.stringify({name,phone}));
-
-msg.style.color="green";
-msg.innerText="Login successful...";
-
-setTimeout(()=>{window.location="category.html";},1000);
-});
-
+// Forgot password
 function forgot(){
-msg.innerText="Reset link sent 📩";
+    alert("Please contact customer support at support@eatfeast.com to reset your password.");
 }
 </script>
 
