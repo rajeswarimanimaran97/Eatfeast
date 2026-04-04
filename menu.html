@@ -7,10 +7,10 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
 body{background:#ffe6ea;text-align:center;padding:20px;}
-.header{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:15px;}
+.header{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:15px;position:relative;}
 .header img{width:50px;height:50px;border-radius:50%;object-fit:cover;}
 .header h1{color:#ff4f6d;font-size:28px;}
-.welcome{color:#ff4f6d;margin-bottom:20px;font-size:18px;font-weight:bold;}
+#welcome{color:#ff4f6d;margin-bottom:20px;font-size:18px;font-weight:bold;}
 .container{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;padding:20px;max-width:1000px;margin:auto;}
 .food{background:white;padding:15px;border-radius:15px;box-shadow:0 8px 20px rgba(0,0,0,0.2);transition:0.3s;}
 .food:hover{transform:translateY(-5px);box-shadow:0 12px 25px rgba(0,0,0,0.3);}
@@ -19,6 +19,8 @@ body{background:#ffe6ea;text-align:center;padding:20px;}
 .food p{margin:8px 0;font-weight:bold;}
 button{width:100%;background:#ff6b81;color:white;border:none;padding:10px;border-radius:8px;cursor:pointer;transition:0.3s;}
 button:hover{background:#ff4f6d;}
+#cart-icon{position:absolute;top:0;right:0;margin:5px;cursor:pointer;}
+#cart-count{position:absolute;top:-8px;right:-8px;background:red;color:white;font-size:14px;font-weight:bold;padding:2px 6px;border-radius:50%;}
 @media(max-width:480px){
   .header h1{font-size:22px;}
   .food img{height:110px;}
@@ -30,13 +32,15 @@ button:hover{background:#ff4f6d;}
 <div class="header">
   <img src="logo.jpg" alt="EatFeast Logo">
   <h1>EatFeast Menu</h1>
+  <div id="cart-icon">
+    <img src="https://img.icons8.com/ios-filled/50/shopping-cart.png" alt="Cart" width="35">
+    <span id="cart-count">0</span>
+  </div>
 </div>
 
-<div class="welcome" id="welcome">Welcome!</div>
+<div id="welcome">Welcome!</div>
 
-<div class="container">
-  <!-- Menu items will appear dynamically -->
-</div>
+<div class="container"></div>
 
 <script>
 // Display username
@@ -45,7 +49,7 @@ if(userData && userData.name){
     document.getElementById("welcome").innerText = `Welcome, ${userData.name}!`;
 }
 
-// Get category from URL (e.g., menu.html?cat=breakfast)
+// Get category from URL
 const urlParams = new URLSearchParams(window.location.search);
 const category = urlParams.get("cat");
 
@@ -56,7 +60,6 @@ const menuItems = {
     {name:"Ice Cream", price:80, img:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80"},
     {name:"Cupcake", price:100, img:"https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=800&q=80"}
   ],
-
   snacks: [
     {name:"Pizza", price:250, img:"https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg"},
     {name:"Burger", price:120, img:"https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg"},
@@ -65,14 +68,12 @@ const menuItems = {
     {name:"Shawarma", price:120, img:"https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg"},
     {name:"Samosa", price:40, img:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"}
   ],
-
   lunch: [
     {name:"Meals", price:200, img:"https://images.pexels.com/photos/723198/pexels-photo-723198.jpeg"},
     {name:"Chicken Briyani", price:180, img:"https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg"},
     {name:"Noodles", price:150, img:"https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg"},
     {name:"Chicken Tikka Masala", price:180, img:"https://images.unsplash.com/photo-1565557623262-b51c2513a641"}
   ],
-
   breakfast: [
     {name:"Chappathi", price:50, img:"https://images.pexels.com/photos/12737658/pexels-photo-12737658.jpeg"},
     {name:"Dosa", price:80, img:"https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg"},
@@ -96,13 +97,28 @@ const container = document.querySelector(".container");
   container.appendChild(div);
 });
 
-// Add to cart
+// Cart functions
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cart-count").innerText = cart.length;
+}
+
+// Click on trolley icon -> go to cart
+document.getElementById("cart-icon").onclick = () => {
+  window.location.href = "cart.html";
+}
+
+// Add to cart with alert + update trolley
 function addToCart(name, price){
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   cart.push({name, price});
   localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
   alert(`${name} added to cart!`);
 }
+
+// Initialize cart count
+updateCartCount();
 </script>
 
 </body>
