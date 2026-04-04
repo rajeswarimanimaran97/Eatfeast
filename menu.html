@@ -4,27 +4,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EatFeast Menu</title>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body{background:#ffe6ea;text-align:center;padding:20px;}
-.header{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:15px;}
-.header img{width:50px;height:50px;border-radius:50%;object-fit:cover;}
-.header h1{color:#ff4f6d;font-size:28px;}
-.welcome{color:#ff4f6d;margin-bottom:20px;font-size:18px;font-weight:bold;}
-.container{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;padding:20px;max-width:1000px;margin:auto;}
-.food{background:white;padding:15px;border-radius:15px;box-shadow:0 8px 20px rgba(0,0,0,0.2);transition:0.3s;}
-.food:hover{transform:translateY(-5px);box-shadow:0 12px 25px rgba(0,0,0,0.3);}
-.food img{width:100%;height:130px;object-fit:cover;border-radius:10px;}
-.food h3{margin-top:10px;color:#ff4f6d;}
-.food p{margin:8px 0;font-weight:bold;}
-button{width:100%;background:#ff6b81;color:white;border:none;padding:10px;border-radius:8px;cursor:pointer;transition:0.3s;}
-button:hover{background:#ff4f6d;}
+
+body{
+  background:#ffe6ea;
+  text-align:center;
+  padding:20px;
+}
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.header img{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.header h1{
+  color:#ff4f6d;
+  font-size:28px;
+}
+
+.welcome{
+  color:#ff4f6d;
+  margin-bottom:20px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+  padding:20px;
+  max-width:1000px;
+  margin:auto;
+}
+
+.food{
+  background:white;
+  padding:15px;
+  border-radius:15px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  transition:0.3s;
+}
+
+.food:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 25px rgba(0,0,0,0.3);
+}
+
+/* ✅ IMAGE FIX */
+.food img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.food h3{
+  margin-top:10px;
+  color:#ff4f6d;
+}
+
+.food p{
+  margin:8px 0;
+  font-weight:bold;
+}
+
+button{
+  width:100%;
+  background:#ff6b81;
+  color:white;
+  border:none;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#ff4f6d;
+}
+
 @media(max-width:480px){
   .header h1{font-size:22px;}
-  .food img{height:110px;}
+  .food img{height:120px;}
 }
 </style>
 </head>
+
 <body>
 
 <div class="header">
@@ -34,66 +112,73 @@ button:hover{background:#ff4f6d;}
 
 <div class="welcome" id="welcome">Welcome!</div>
 
-<div class="container">
-  <!-- Menu items will appear dynamically -->
-</div>
+<div class="container"></div>
 
 <script>
-// Display username
+
+// Username display
 const userData = JSON.parse(localStorage.getItem("user"));
 if(userData && userData.name){
-    document.getElementById("welcome").innerText = `Welcome, ${userData.name}!`;
+  document.getElementById("welcome").innerText = `Welcome, ${userData.name}!`;
 }
 
-// Get category from URL
+// Category from URL
 const urlParams = new URLSearchParams(window.location.search);
 const category = urlParams.get("cat");
 
-// Verified image links
+// ✅ ALL CORRECT IMAGE LINKS
 const menuItems = {
+
   desserts: [
-    {name:"Chocolate Cake", price:150, img:"https://images.pexels.com/photos/132694/pexels-photo-132694.jpeg"},
-    {name:"Ice Cream", price:80, img:"https://images.unsplash.com/photo-1563805042-7684c019e1cb"},
-    {name:"Cupcake", price:100, img:"https://images.unsplash.com/photo-1587668178277-295251f900ce"}
+    {name:"Chocolate Cake", price:150, img:"https://images.pexels.com/photos/45202/chocolate-cake-dessert-sweet-45202.jpeg"},
+    {name:"Ice Cream", price:80, img:"https://images.pexels.com/photos/1352278/pexels-photo-1352278.jpeg"},
+    {name:"Cupcake", price:100, img:"https://images.pexels.com/photos/357573/pexels-photo-357573.jpeg"}
   ],
+
   snacks: [
-    {name:"Pizza", price:250, img:"https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=400&q=80"},
-    {name:"Burger", price:120, img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80"},
-    {name:"Fries", price:80, img:"https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=400&q=80"}
+    {name:"Pizza", price:250, img:"https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg"},
+    {name:"Burger", price:120, img:"https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg"},
+    {name:"Fries", price:80, img:"https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg"}
   ],
+
   lunch: [
-    {name:"Rice Plate", price:200, img:"https://images.unsplash.com/photo-1600891964870-0ea6b80bbf79?auto=format&fit=crop&w=400&q=80"},
-    {name:"Curry", price:180, img:"https://images.unsplash.com/photo-1617191513056-0617abdf81f9?auto=format&fit=crop&w=400&q=80"},
-    {name:"Noodles", price:150, img:"https://images.unsplash.com/photo-1552332386-f8dd00dc2f46?auto=format&fit=crop&w=400&q=80"}
+    {name:"Meals", price:200, img:"https://images.pexels.com/photos/723198/pexels-photo-723198.jpeg"},
+    {name:"Chicken Curry", price:180, img:"https://images.pexels.com/photos/750073/pexels-photo-750073.jpeg"},
+    {name:"Noodles", price:150, img:"https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg"}
   ],
+
   breakfast: [
-    {name:"Idli", price:50, img:"https://images.unsplash.com/photo-1584271590577-a1bfe83ce1c6?auto=format&fit=crop&w=400&q=80"},
-    {name:"Dosa", price:60, img:"https://images.unsplash.com/photo-1603079659383-275c1882ebae?auto=format&fit=crop&w=400&q=80"},
-    {name:"Juice", price:60, img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80"}
+    {name:"Idli", price:50, img:"https://images.pexels.com/photos/4331496/pexels-photo-4331496.jpeg"},
+    {name:"Dosa", price:60, img:"https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg"},
+    {name:"Juice", price:60, img:"https://images.pexels.com/photos/96974/pexels-photo-96974.jpeg"}
   ]
+
 };
 
-// Generate menu dynamically
+// Generate menu
 const container = document.querySelector(".container");
+
 (menuItems[category] || []).forEach(item => {
   const div = document.createElement("div");
   div.classList.add("food");
+
   div.innerHTML = `
     <img src="${item.img}" alt="${item.name}">
     <h3>${item.name}</h3>
     <p>₹${item.price}</p>
     <button onclick="addToCart('${item.name}', ${item.price})">Add</button>
   `;
+
   container.appendChild(div);
 });
 
-// Silent add to cart
+// Add to cart
 function addToCart(name, price){
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   cart.push({name, price});
   localStorage.setItem("cart", JSON.stringify(cart));
-  // Optionally update cart counter here instead of alert
 }
+
 </script>
 
 </body>
